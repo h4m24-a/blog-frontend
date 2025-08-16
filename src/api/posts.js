@@ -1,5 +1,6 @@
 const getposts = async (token) => {
   const response = await fetch("http://localhost:3000/api/posts", {
+    method: 'GET',
     credentials: "include",
     headers: {
       Authorization: `Bearer ${token}`,
