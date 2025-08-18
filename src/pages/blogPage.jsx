@@ -198,7 +198,7 @@ const BlogPage = () => {
 
   const HandleSelectCommentId = (commentId) => {
     setSelectCommentId(commentId)
-    setShowForm(!showForm)
+    setShowForm(!showForm)    // flips value when clicked to hide and display form
     setUpdateSucess("");
     setCommentError("");
     setUpdateValidationError("")
@@ -388,6 +388,3 @@ const BlogPage = () => {
 };
 
 export default BlogPage;
-
-
-// form component?
