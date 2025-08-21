@@ -93,7 +93,6 @@ const BlogPage = () => {
         commentErr[err.path] = err.msg   // eg: commentErr["content"] = "comment error message"
       })
 
-      console.log(commentErr);
       setValidationError(commentErr);
       setSuccess("");
       setCommentError("")
@@ -132,7 +131,6 @@ const BlogPage = () => {
 
         queryClient.invalidateQueries(["post"])
       } catch (error) {
-        console.log(error)
         throw new Error(error)
       }
     }
@@ -164,7 +162,6 @@ const BlogPage = () => {
         setUpdatedContent("")
         setUpdateCommentError("")
         setSuccess("")
-        console.log(updatedCommentErr)
         return;
       }
 
@@ -180,8 +177,7 @@ const BlogPage = () => {
 
         // Invalidate the post query to refetch and displayed post data and comments
         queryClient.invalidateQueries(["post"]);
-        console.log(updatedContent)
-        console.log(updateSuccess)
+        
       }
       
       
