@@ -68,7 +68,7 @@ const LoginPage = () => {
     <>
       <div style={{ backgroundColor: "whitesmoke", minHeight: "100vh" }}>
         <div className="login-container">
-          {/* <img className="logo" src="" alt="logo" /> */}
+          <i id="logo" className="fa-solid fa-blog text-5xl text-black" ></i>
           <p className="login-subtitle">Welcome back!</p>
 
           <form onSubmit={HandleLogin}>
