@@ -98,7 +98,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     
-    if (isAuthenticated) {
+    if (!isAuthenticated) return
       
       const getUserProfile = async () => {
 
@@ -129,12 +129,11 @@ export const AuthProvider = ({ children }) => {
 
       } catch (error) {
         setError(error.message);
-        throw new Error(error.message);
       }
     };
     
     getUserProfile();
-    }
+
   }, [accessToken, isAuthenticated]);
 
 
