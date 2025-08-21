@@ -53,7 +53,6 @@ const SignupPage = () => {
         })                                                                                         // msg is the error message from backend
                                                                     // Maps each error to the corresponding field (e.g., username, password)
 
-        console.log(errObj)
         setValidationError(errObj)    // store error in validation state
         setSuccess("")
         setError("")
@@ -85,9 +84,9 @@ const SignupPage = () => {
   
   
   
-  if (loading) (
-     <div>Loading Sign Up form</div>
-  )
+  if (loading)  {
+     <div>Submitting data</div>
+  }
   
   
   return (
