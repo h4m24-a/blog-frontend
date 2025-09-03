@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState();
   const [userId, setUserId] = useState();
   const [loggedInUser, setLoggedInUser] = useState("");
+  const [role, setRole] = useState(null)
   const [error, setError] = useState("")
   const [isAuthenticated, setIsAuthenticated] = useState(() => {  // lazy initialization using the useState hook.
   return localStorage.getItem("isAuthenticated");   
@@ -51,6 +52,7 @@ export const AuthProvider = ({ children }) => {
       // Clear token and localStorage
       setIsAuthenticated(false); // user is now unauthorized after logging out
       setAccessToken(null); // Update & empty token state when user logs out
+      setRole(null)
       localStorage.removeItem("isAuthenticated"); // Clear values from local storage
 
       
@@ -125,7 +127,8 @@ export const AuthProvider = ({ children }) => {
         
         setUserId(data.id);
         setLoggedInUser(data.username);
-        
+        setRole(data.role)
+        console.log(role)
 
       } catch (error) {
         setError(error.message);
@@ -134,13 +137,13 @@ export const AuthProvider = ({ children }) => {
     
     getUserProfile();
 
-  }, [accessToken, isAuthenticated]);
+  }, [accessToken, isAuthenticated, role]);
 
 
   
 
   return (
-    <AuthContext.Provider value={{ accessToken, isAuthenticated, userId, loggedInUser, login, logout, error }}
+    <AuthContext.Provider value={{ accessToken, isAuthenticated, userId, role, loggedInUser, login, logout, error }}
     >
       {children}
     </AuthContext.Provider>
