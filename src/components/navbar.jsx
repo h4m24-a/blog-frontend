@@ -1,17 +1,20 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { useAuthContext } from "../context/useAuthContext"; // Assuming the path is correct
-
-const navigation = [
-  { name: 'Home', href: '/', current: false }
-];
+import { useAuthContext } from "../context/useAuthContext"; 
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
 export default function Navbar() {
-  const { isAuthenticated, logout, loggedInUser } = useAuthContext(); // Authentication context
+  const { isAuthenticated, logout, loggedInUser, role } = useAuthContext(); // Authentication context
+
+  const navigation = [
+    { name: 'Home', href: '/', current: true },
+    // Conditionally include 'Admin' item based on user role. If role is Admin, the Admin nav item is created. If not admin, only Home nav item
+    ...(role === "ADMIN" ? [{ name: 'Admin', href: '/pages/admin/dashboard', current: false }] : [])
+  ];
+  
 
   return (
     <Disclosure as="nav" className="relative bg-white">
