@@ -40,13 +40,13 @@ const LoginPage = () => {
 
       
       // If successfull
-      if (data.accessToken) {
+      if (response.status === 200) {
+        Navigate('/')
         login(data.accessToken);
         setError("")
         setSuccess(data.message)
       }
 
-      Navigate('/')
       
 
     
