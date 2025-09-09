@@ -9,7 +9,7 @@ import { useAuthContext } from "../context/useAuthContext";
 export default function Homepage() {
 
 
-  const { accessToken } = useAuthContext();
+  const { accessToken, role } = useAuthContext();
 
 
   const { data: posts, isLoading, isError, error } = useQuery( {
@@ -30,6 +30,9 @@ export default function Homepage() {
     return <div>{error.message}</div>;
   }
 
+  if (role === null) {
+  return <div>Loading posts...</div>
+}
 
   
   
