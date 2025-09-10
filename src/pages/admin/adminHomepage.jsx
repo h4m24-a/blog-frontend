@@ -39,7 +39,7 @@ const AdminHomePage = () => {
     <>
       <NavbarAdmin />
       <main>
-      <div className="py-4">
+      <div className="py-2">
         <div className="mx-auto max-w-7xl px-6 lg:px-5">
           <div className="mx-auto max-w-fit text-center">
             <p className="text-5xl mt-2 font-semibold font-mono tracking-tight text-gray-900">
@@ -93,10 +93,10 @@ const AdminHomePage = () => {
                 </div>
 
                 <p className={`text-sm px-3 py-2 rounded-xl mt-3 ml-auto font-medium font-rubik
-                    ${post.published ? 'bg-green-200 text-green-700' : 'bg-red-200 text-red-700'}
+                    ${post.published ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800'}
                   `}
                 >
-                  Published: {post.published ? 'True' : 'False'}
+                   {post.published ? 'Published' : 'Not Published'}
                 </p>
 
 
