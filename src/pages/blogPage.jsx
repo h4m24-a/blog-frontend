@@ -19,7 +19,7 @@ const BlogPage = () => {
   const [updatedContent, setUpdatedContent] = useState("")
   const [updateCommentError, setUpdateCommentError] = useState("");
   const [updateValidationError, setUpdateValidationError] = useState({})
-  const [updateSuccess, setUpdateSucess] = useState("")
+  const [updateSuccess, setUpdateSuccess] = useState("")
   const [selectCommentId, setSelectCommentId] = useState()
 
   const [showForm, setShowForm] = useState(false)
@@ -43,7 +43,7 @@ const BlogPage = () => {
     setUpdatedContent("")
     setUpdateCommentError("")
     setUpdateValidationError("")
-    setUpdateSucess("")
+    setUpdateSuccess("")
   }, [selectCommentId])  // This hook runs whenever selectCommentId changes
   
 
@@ -158,7 +158,7 @@ const BlogPage = () => {
         })
 
         setUpdateValidationError(updatedCommentErr);
-        setUpdateSucess("");
+        setUpdateSuccess("");
         setUpdatedContent("")
         setUpdateCommentError("")
         setSuccess("")
@@ -169,7 +169,7 @@ const BlogPage = () => {
       // If successfull
       if (response.status === 200) {
         setUpdatedContent(response.data.updatedComment);
-        setUpdateSucess(response.data.message);
+        setUpdateSuccess(response.data.message);
         setUpdateCommentError("");
         setUpdateValidationError("")
         setUpdatedContent("")
@@ -195,7 +195,7 @@ const BlogPage = () => {
   const HandleSelectCommentId = (commentId) => {
     setSelectCommentId(commentId)
     setShowForm(!showForm)    // flips value when clicked to hide and display form
-    setUpdateSucess("");
+    setUpdateSuccess("");
     setCommentError("");
     setUpdateValidationError("")
   }
