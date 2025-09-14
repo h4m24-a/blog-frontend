@@ -17,7 +17,6 @@ const AdminHomePage = () => {
   })
 
 
-  console.log(accessToken)
 
   if (isLoading || !posts) {
     return <div>Loading Posts...</div>
