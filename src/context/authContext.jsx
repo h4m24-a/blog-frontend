@@ -12,7 +12,8 @@ export const AuthProvider = ({ children }) => {
   const [userId, setUserId] = useState();
   const [loggedInUser, setLoggedInUser] = useState("");
   const [role, setRole] = useState(null)
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
+  const [loading, setLoading] =  useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(() => {  // lazy initialization using the useState hook.
   return localStorage.getItem("isAuthenticated");   
 }); // reads from localStorage right at initialization 
@@ -100,11 +101,12 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     
-    if (!isAuthenticated) return
+    if (!isAuthenticated) return;
+    if (!accessToken) return;
+    setLoading(true)
+    
+    const getUserProfile = async () => {
       
-      const getUserProfile = async () => {
-
-        
         try {
         const response = await fetch("http://localhost:3000/api/auth/user", {
           credentials: "include",
@@ -128,14 +130,15 @@ export const AuthProvider = ({ children }) => {
         setUserId(data.id);
         setLoggedInUser(data.username);
         setRole(data.role)
-        console.log(role)
-
+        setLoading(false)
+        
       } catch (error) {
         setError(error.message);
       }
-    };
     
+    }
     getUserProfile();
+    
 
   }, [accessToken, isAuthenticated, role]);
 
@@ -143,7 +146,7 @@ export const AuthProvider = ({ children }) => {
   
 
   return (
-    <AuthContext.Provider value={{ accessToken, isAuthenticated, userId, role, loggedInUser, login, logout, error }}
+    <AuthContext.Provider value={{ accessToken, isAuthenticated, userId, role, loggedInUser, loading, login, logout, error }}
     >
       {children}
     </AuthContext.Provider>
