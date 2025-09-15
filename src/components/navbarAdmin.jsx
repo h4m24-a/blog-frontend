@@ -7,7 +7,7 @@ const navigation = [
   { name: 'Home', href: '/', current: false },
   { name: 'Dashboard', href: '/pages/admin/dashboard', current: true },
   { name: 'View Posts', href: '/pages/admin/posts', current: false },
-  { name: 'Create Post', href: '#', current: false },
+  { name: 'Create Post', href: '/pages/admin/create', current: false },
 
 ]
 
