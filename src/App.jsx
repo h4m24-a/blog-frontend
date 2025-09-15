@@ -8,6 +8,7 @@ import SignupPage from "./pages/signupPage";
 import Dashboard from "./pages/admin/dashboard";
 import AdminBlogPage from "./pages/admin/adminBlogPage";
 import AdminHomePage from "./pages/admin/adminHomepage";
+import CreatePostPage from "./pages/admin/createPostPage";
 import Error from "./pages/Error";
 import NotAuthorized from "./pages/notAuthorized";
 
@@ -40,6 +41,7 @@ function App() {
                   <Route path="/pages/admin/dashboard" element={<Dashboard />}  />
                   <Route path="/pages/admin/posts" element={<AdminHomePage />} />
                   <Route path="/pages/admin/posts/:postId" element={<AdminBlogPage />} />
+                  <Route path="/pages/admin/create" element={<CreatePostPage />} />
                 </>
               )}
 
@@ -48,6 +50,7 @@ function App() {
                 <Route path="/pages/admin/dashboard" element={<NotAuthorized />}  />
                 <Route path="/pages/admin/posts" element={<NotAuthorized />} />
                 <Route path="/pages/admin/posts/:postId" element={<NotAuthorized />} />
+                <Route path="/pages/admin/posts/create" element={<NotAuthorized />} />
                 </>
               )}
 
