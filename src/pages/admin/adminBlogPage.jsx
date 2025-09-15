@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuthContext } from "../../context/useAuthContext";
-import { useParams, useNavigate } from "react-router";
+import { useParams } from "react-router";
 import getAdminSinglePost from "../../api/admin/adminSinglePost";
 import NavbarAdmin from "../../components/navbarAdmin";
 import { useState, useEffect } from "react";
@@ -9,8 +9,6 @@ import adminUpdateComment from "../../api/admin/adminUpdateComment";
 import togglePostStatus from "../../api/admin/togglePostStatus";
 
 const AdminBlogPage = () => {
-
-  const Navigate = useNavigate()
 
   const [updatedContent, setUpdatedContent] = useState("");
   const [updateCommentError, setUpdateCommentError] = useState("");
