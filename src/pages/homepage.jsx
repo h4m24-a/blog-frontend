@@ -62,7 +62,7 @@ export default function Homepage() {
               <Link to={`/pages/posts/${post.id}`}
               
                 key={post.id}
-                className="flex max-w-xl bg-gray-100 py-3 px-4 rounded-2xl flex-col items-start justify-center"
+                className="flex max-w-xl bg-gray-100 py-3 px-4 rounded-2xl flex-col items-start justify-center hover:bg-gray-200 hover:ease-in-out"
               >
                 <div className="flex flex-col items-start gap-x-4 text-xs text-gray-500">
                   <time dateTime={post.createdAt}>
