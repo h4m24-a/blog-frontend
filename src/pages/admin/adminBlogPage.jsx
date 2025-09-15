@@ -1,20 +1,26 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuthContext } from "../../context/useAuthContext";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import getAdminSinglePost from "../../api/admin/adminSinglePost";
 import NavbarAdmin from "../../components/navbarAdmin";
 import { useState, useEffect } from "react";
 import adminDeleteComment from "../../api/admin/adminDeleteComment";
 import adminUpdateComment from "../../api/admin/adminUpdateComment";
+import togglePostStatus from "../../api/admin/togglePostStatus";
 
 const AdminBlogPage = () => {
+
+  const Navigate = useNavigate()
 
   const [updatedContent, setUpdatedContent] = useState("");
   const [updateCommentError, setUpdateCommentError] = useState("");
   const [updateSuccess, setUpdateSuccess] = useState("");
-  
+
   const [selectCommentId, setSelectCommentId] = useState()
   const [showForm, setShowForm] = useState(false)
+
+  const [toggleMessage, setToggleMessage] = useState("")
+  const [toggleError, setToggleError] = useState("")
 
 
   const { postId } = useParams();
@@ -36,7 +42,7 @@ const AdminBlogPage = () => {
     setUpdateCommentError("")
     setUpdateSuccess("")
   }, [selectCommentId])  // This hook runs whenever selectCommentId changes
-  
+
 
 
   if (isLoading || !post) {
@@ -47,7 +53,7 @@ const AdminBlogPage = () => {
   if (isError) {
     return <div>{error.message}</div>
   }
-  
+
 
 
 
@@ -92,7 +98,7 @@ const AdminBlogPage = () => {
         setUpdateSuccess(response.data.message)  // message is displayed, not visible because showForm is set to false when comment is updated
         setUpdateCommentError("")
         setUpdatedContent("")
-        setShowForm(false)    
+        setShowForm(false)
 
         // Invalidate the post query to refetch and displayed post data and comments
         queryClient.invalidateQueries(["post"]);
@@ -100,7 +106,7 @@ const AdminBlogPage = () => {
       }
 
 
-      
+
       } catch (error) {
       setUpdateCommentError(error.message)
       setUpdatedContent("");
@@ -110,6 +116,9 @@ const AdminBlogPage = () => {
   }
 
 
+
+
+  // Stores id of selected post
   const HandleSelectCommentId = async (commentId) => {
     setShowForm(!showForm)    // flips value when clicked to hide and display form. initally set to false to hide the form.
     setSelectCommentId(commentId);
@@ -119,13 +128,36 @@ const AdminBlogPage = () => {
   }
 
 
+  // Function that handles toggle of publish status by flipping the boolean value
+  const HandleToggleStatus = async () => {
+    try {
+      const response = await togglePostStatus(accessToken, postId)
+        
+        setToggleMessage(response.message)
+
+    } catch (error) {
+      setToggleMessage("")
+      setToggleError(error.message)
+    }
+  }
+
+
+
   return (
-    <> 
+    <>
     <NavbarAdmin />
     <main>
       <div className="container mx-auto max-w-3xl p-6 lg:max-w-4xl">
-          <article key={post.id} className="">
+
+          <article key={post.id}>
             <header className=" px-2 mb-4 flex flex-col">
+
+              <button onClick={ () => HandleToggleStatus()} className="bg-transparent mx-auto mb-3 cursor-pointer hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                Toggle Status
+              </button>
+              {toggleMessage && <p className="text-center text-red-500 font-medium mb-2 font-quicksand">{toggleMessage}</p>}
+              {toggleError && <p className="text-center text-red-500 font-medium mb-2 font-quicksand">{toggleError}</p>}
+
               <h1 id="blog-title" className="text-center font-bold text-4xl">
                 {post.title}
               </h1>
@@ -162,7 +194,7 @@ const AdminBlogPage = () => {
             </div>
           </article>
 
-          
+
           <div className="comments-section">
             <p id="comment-title" className="mt-10 mb-5 text-4xl ">
               Comments
@@ -192,12 +224,12 @@ const AdminBlogPage = () => {
                   </div>
 
 
-                  
-                  {/* Delete & Update Button*/ 
+
+                  {/* Delete & Update Button*/
                   }
                   <div className="flex flex-col w-fit ml-auto ">
 
-                  
+
                     <div className="ml-auto flex justify-center items-center flex-col gap-3 ">
                       <button
                         type="button"
@@ -217,13 +249,13 @@ const AdminBlogPage = () => {
                     </div>
 
 
-                    {showForm && selectCommentId === comment.id && (  
+                    {showForm && selectCommentId === comment.id && (
                       <div className="w-full max-w-full" >
-                      <form 
-                        onSubmit={(e) => HandleUpdateComment(e, comment.id)}  
+                      <form
+                        onSubmit={(e) => HandleUpdateComment(e, comment.id)}
                         className="flex flex-col justify-center items-center max-w-full w-full">  {/* Update Comment */}
 
-                        <label htmlFor="updatedContent"></label> 
+                        <label htmlFor="updatedContent"></label>
                         <input
                           className="w-fit p-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-neutral-950"
                           id="updatedContent"
@@ -241,23 +273,23 @@ const AdminBlogPage = () => {
                           Update comment
                         </button>
                         <div className="flex w-full  flex-col">
-                          
+
                         </div>
                       </form>
 
                         {/* Displaying success and error messages */}
                         {updateSuccess && <p className="text-center mt-1 font-rubik">{updateSuccess}</p>}
-    
+
                         {updateCommentError && <p className="text-center font-poppins text-red-400">{updateCommentError}</p>}
                     </div>
                     )}
-                
-                  
+
+
                   </div>
 
 
 
-              
+
 
                 </div>
 
@@ -269,10 +301,10 @@ const AdminBlogPage = () => {
 
 
     </main>
-    
-    
-    
-    
+
+
+
+
     </>
   )
 }
@@ -283,6 +315,6 @@ export default AdminBlogPage
 
 //TODO Implement delete and update comment for Admin
 
-//TODO CREATE, UPDATE & DELETE Post 
+//TODO CREATE, UPDATE & DELETE Post
 
 //TODO Toggle button to publish and unpublish post
