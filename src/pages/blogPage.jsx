@@ -240,9 +240,9 @@ const BlogPage = () => {
             </header>
 
             <div className="blog-post">
-              <p id="blog-content" className="text-lg/8">
-                {post.content}
-              </p>
+            <p id="blog-content" className="text-lg/8 whitespace-pre-line">
+              {post.content}
+            </p>
             </div>
           </article>
         
