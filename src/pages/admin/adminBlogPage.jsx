@@ -1,14 +1,17 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuthContext } from "../../context/useAuthContext";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import getAdminSinglePost from "../../api/admin/adminSinglePost";
 import NavbarAdmin from "../../components/navbarAdmin";
 import { useState, useEffect } from "react";
 import adminDeleteComment from "../../api/admin/adminDeleteComment";
 import adminUpdateComment from "../../api/admin/adminUpdateComment";
 import togglePostStatus from "../../api/admin/togglePostStatus";
+import deletePost from "../../api/admin/deletePost";
 
 const AdminBlogPage = () => {
+
+  const Navigate = useNavigate()
 
   const [updatedContent, setUpdatedContent] = useState("");
   const [updateCommentError, setUpdateCommentError] = useState("");
@@ -19,6 +22,8 @@ const AdminBlogPage = () => {
 
   const [toggleMessage, setToggleMessage] = useState("")
   const [toggleError, setToggleError] = useState("")
+
+  const [postDeleteError, setPostDeleteError] = useState("")
 
 
   const { postId } = useParams();
@@ -140,6 +145,23 @@ const AdminBlogPage = () => {
   }
 
 
+  // Function to delete post
+  const HandleDeletePostButton = async () => {
+
+    const alertYes = window.confirm('Do you want to delete this post?');
+
+    if (alertYes) {
+      try {
+        await deletePost(accessToken, postId)
+        Navigate("/pages/admin/posts" , {replace: true})
+
+      } catch (error) {
+        setPostDeleteError(error.message)
+      }
+    }
+
+  }
+
 
   return (
     <>
@@ -150,11 +172,22 @@ const AdminBlogPage = () => {
           <article key={post.id}>
             <header className=" px-2 mb-4 flex flex-col">
 
-              <button onClick={ () => HandleToggleStatus()} className="bg-transparent mx-auto mb-3 cursor-pointer hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+              <div className="flex mx-auto flex-col lg:flex-row lg:gap-2">
+              <button onClick={ () => HandleToggleStatus()} className="bg-transparent mx mb-3 cursor-pointer hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                 Toggle Status
               </button>
               {toggleMessage && <p className="text-center text-red-500 font-medium mb-2 font-quicksand">{toggleMessage}</p>}
               {toggleError && <p className="text-center text-red-500 font-medium mb-2 font-quicksand">{toggleError}</p>}
+
+               <button onClick={ () => HandleDeletePostButton()} className="bg-transparent mx mb-3 cursor-pointer hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
+                Delete Post
+              </button>
+                {postDeleteError && <p className="text-center text-red-500 font-medium mb-2 font-quicksand">{postDeleteError}</p>}
+
+
+              </div>
+
+
 
               <h1 id="blog-title" className="text-center font-bold text-4xl">
                 {post.title}
