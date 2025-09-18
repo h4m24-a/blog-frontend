@@ -47,6 +47,7 @@ const AdminBlogPage = () => {
   });
 
 
+ 
     useEffect(() => {
       // clear updatedComment input when selected id changes
       setUpdatedContent("")
@@ -62,6 +63,21 @@ const AdminBlogPage = () => {
       setUpdatedPostContent(post?.content)
   }, [post])  // This hook runs whenever post changes
 
+
+
+  
+    // Populate input form with comment for update form
+    useEffect(() => {
+      setUpdatedContent("")
+      const selectedComment = post?.comments.find(comment => comment.id === selectCommentId);
+      
+      if (selectedComment) {
+        setUpdatedContent(selectedComment.content);  // Populate form with selected comment's content
+      } else {
+        setUpdatedContent("")
+      }
+    }, [selectCommentId, post])
+  
 
 
   if (isLoading || !post) {
@@ -141,7 +157,6 @@ const AdminBlogPage = () => {
     setShowForm(!showForm)    // flips value when clicked to hide and display form. initally set to false to hide the form.
     setSelectCommentId(commentId);
     setUpdateCommentError("");
-    setUpdatedContent("")
     setUpdateSuccess("");
   }
 

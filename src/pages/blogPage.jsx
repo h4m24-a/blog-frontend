@@ -40,12 +40,26 @@ const BlogPage = () => {
   useEffect(() => {
     // clear updatedComment input when selected id changes
     setUpdatedContent("")
-    setUpdatedContent("")
     setUpdateCommentError("")
     setUpdateValidationError("")
     setUpdateSuccess("")
   }, [selectCommentId])  // This hook runs whenever selectCommentId changes
   
+
+
+
+  // Populate input form with comment for update form
+  useEffect(() => {
+    const selectedComment = post?.comments.find(comment => comment.id === selectCommentId);
+    
+    if (selectedComment) {
+      setUpdatedContent(selectedComment.content);  // Populate form with selected comment's content
+    } else {
+      setUpdatedContent("")
+    }
+  }, [selectCommentId, post])
+
+
 
   // Loading state: show loading indicator while data is being fetched
   if (isLoading || !post) {
@@ -192,6 +206,7 @@ const BlogPage = () => {
   }
 
 
+// get the id of selected comment and use it to display the update form.
   const HandleSelectCommentId = (commentId) => {
     setSelectCommentId(commentId)
     setShowForm(!showForm)    // flips value when clicked to hide and display form
