@@ -20,6 +20,10 @@ Blog API
 - Fetched API data using fetch method.
 - Implemented authentication flows (login, registration) for access to the app.
 - Handled user authentication state with a Global State, ensuring access control based on user roles and permissions.
+- Admin routes are secured with JWT authentication.
+- Created an Admin dashboard for admin to manage posts.
+- An Admin can View all posts with their publish status and toggle publish status.
+- Admins can Create, edit, and delete posts as well as View, edit, and delete user comments on posts.
 
 
 
