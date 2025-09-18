@@ -44,11 +44,11 @@ const CreatePostPage = () => {
     <main>
 
       <div className="flex flex-col justify-center items-center">
-        <h1 className="text-2xl bg-neutral-800 rounded-xl px-8 py-3 text-white mt-2 text-center font-rubik">Create new post</h1>
+        <h1 className="text-2xl bg-black rounded-md px-8 py-3 text-white mt-2 text-center font-rubik">Create new post</h1>
       </div>
 
-            <div className="flex mt-5 flex-col mx-auto justify-center items-center">
-              <form onSubmit={HandleCreatePost} className="border-1 shadow-xl border-black rounded-md p-3">     {/* Create post Form */}
+            <div className="flex mt-7 flex-col mx-auto justify-end items-center">
+              <form onSubmit={HandleCreatePost} className="border-1 h-70 shadow-xl border-black rounded-md p-3">     {/* Create post Form */}
 
                 <label htmlFor="title"></label>
                 <input
