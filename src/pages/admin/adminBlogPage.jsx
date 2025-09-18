@@ -8,6 +8,7 @@ import adminDeleteComment from "../../api/admin/adminDeleteComment";
 import adminUpdateComment from "../../api/admin/adminUpdateComment";
 import togglePostStatus from "../../api/admin/togglePostStatus";
 import deletePost from "../../api/admin/deletePost";
+import updatePost from "../../api/admin/updatePost";
 
 const AdminBlogPage = () => {
 
@@ -25,6 +26,13 @@ const AdminBlogPage = () => {
 
   const [postDeleteError, setPostDeleteError] = useState("")
 
+  
+  const [updatedPostTitle, setUpdatedPostTitle] = useState("");
+  const [updatedPostContent, setUpdatedPostContent]  = useState("");
+  const [updatedPostSuccess, setUpdatedPostSuccess] = useState("");
+  const [updatedPostError, setUpdatedPostError] =  useState("");
+  const [showPostForm, setShowPostForm] = useState(false)
+
 
   const { postId } = useParams();
 
@@ -40,11 +48,19 @@ const AdminBlogPage = () => {
 
 
     useEffect(() => {
-    // clear updatedComment input when selected id changes
-    setUpdatedContent("")
-    setUpdateCommentError("")
-    setUpdateSuccess("")
+      // clear updatedComment input when selected id changes
+      setUpdatedContent("")
+      setUpdateCommentError("")
+      setUpdateSuccess("")
   }, [selectCommentId])  // This hook runs whenever selectCommentId changes
+
+  
+
+    // Populate the update fields with existing data
+    useEffect(() => {
+      setUpdatedPostTitle(post?.title);
+      setUpdatedPostContent(post?.content)
+  }, [post])  // This hook runs whenever post changes
 
 
 
@@ -56,7 +72,6 @@ const AdminBlogPage = () => {
   if (isError) {
     return <div>{error.message}</div>
   }
-
 
 
 
@@ -162,6 +177,40 @@ const AdminBlogPage = () => {
 
   }
 
+  
+
+
+  // Function to update post
+  const HandleUpdatePost = async (e) => {
+    e.preventDefault()
+
+    try {
+      const response = await updatePost(accessToken, postId, updatedPostTitle, updatedPostContent)
+
+      setUpdatedPostSuccess(response.data.message)
+      
+      setShowPostForm(false)
+      // Invalidate the post query to refetch and displayed post data and comments
+        queryClient.invalidateQueries(["post"]);
+  
+      
+      
+    } catch (error) {
+      setUpdatedPostError(error.message);
+      setUpdatedPostTitle("");
+      setUpdatedPostContent("");
+      setUpdatedPostSuccess("")
+      throw new Error(error)
+    }
+    
+  }
+
+
+  // Function hide and display update form when  clicking update button
+  const DisplayUpdateForm = () => {
+    setShowPostForm(!showPostForm)
+    
+  }
 
   return (
     <>
@@ -172,20 +221,70 @@ const AdminBlogPage = () => {
           <article key={post.id}>
             <header className=" px-2 mb-4 flex flex-col">
 
-              <div className="flex mx-auto flex-col lg:flex-row lg:gap-2">
-              <button onClick={ () => HandleToggleStatus()} className="bg-transparent mx mb-3 cursor-pointer hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                Toggle Status
-              </button>
-              {toggleMessage && <p className="text-center text-red-500 font-medium mb-2 font-quicksand">{toggleMessage}</p>}
-              {toggleError && <p className="text-center text-red-500 font-medium mb-2 font-quicksand">{toggleError}</p>}
+              <div className="grid grid-cols-3  gap-2 justify-center items-start ">
 
-               <button onClick={ () => HandleDeletePostButton()} className="bg-transparent mx mb-3 cursor-pointer hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
+                <div className="flex flex-col">
+                  <button onClick={ () => HandleToggleStatus()} className="bg-transparent  mb-3 cursor-pointer hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                    Toggle Status
+                  </button>
+                  {toggleMessage && <p className="text-center text-red-500 font-medium mb-2 font-quicksand">{toggleMessage}</p>}
+                  {toggleError && <p className="text-center text-red-500 font-medium mb-2 font-quicksand">{toggleError}</p>}
+                </div>
+
+              <button onClick={ () => HandleDeletePostButton()} className="bg-transparent  mb-3 cursor-pointer hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
                 Delete Post
               </button>
-                {postDeleteError && <p className="text-center text-red-500 font-medium mb-2 font-quicksand">{postDeleteError}</p>}
+              {postDeleteError && <p className="text-center text-red-500 font-medium  mb-2 font-quicksand">{postDeleteError}</p>}
 
+              <button onClick={ () => DisplayUpdateForm()} className="bg-transparent  mb-3 cursor-pointer hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded">
+                Update Post
+              </button>
 
               </div>
+              
+              {showPostForm && (
+                <div className="flex mt-1 mb-5 flex-col mx-auto justify-center items-center">
+                  <form onSubmit={HandleUpdatePost} className="border-1 font-openSans shadow-xl border-black rounded-md p-3">
+
+                    <label className="text-sm" htmlFor="updatedPostTitle">Update Title</label>
+                    <input
+                      className="mt-2"
+                      id="updatedPostTitle"
+                      name="updatedPostTitle"
+                      placeholder="Update Title"
+                      type="text"
+                      value={updatedPostTitle}
+                      onChange={(e) => setUpdatedPostTitle(e.target.value)}
+                      required
+                    />
+
+                    <label className="text-sm" htmlFor="updatedPostContent">Update Content</label>
+                    <textarea
+                      className="border-1 w-full max-w-full mt-1 px-5 py-2"
+                      id="updatedPostContent"
+                      name="updatedPostContent"
+                      placeholder="Update Post"
+                      value={updatedPostContent} 
+                      onChange={(e) => setUpdatedPostContent(e.target.value)}
+                      required
+                    />
+
+                    <div className="flex justify-center items-center flex-col">
+                      <button
+                        type="submit"
+                        className="inline-flex self-center h-10 mt-2 cursor-pointer mb-7 items-center justify-center rounded-md bg-neutral-950 px-6 font-medium text-neutral-50 transition active:scale-110"
+                      >
+                        Update Post
+                      </button>
+
+                      {updatedPostSuccess && <p className="text-center"> {updatedPostSuccess} </p>}
+                      {updatedPostError && <p className="text-center font-sans text-red-400"> {updatedPostError} </p>}
+                    </div>
+                  </form>
+                </div>
+              )}
+
+
 
 
 
@@ -231,6 +330,10 @@ const AdminBlogPage = () => {
               Comments
             </p>
 
+            {post?.comments.length === 0 &&  (
+            <p className=" text-lg text-center text-red-500 font-openSans">No comments are found!</p>
+            )}
+
 
             {post?.comments.map((comment) => {
               return (
@@ -256,8 +359,7 @@ const AdminBlogPage = () => {
 
 
 
-                  {/* Delete & Update Button*/
-                  }
+                  {/* Delete & Update Button*/}
                   <div className="flex flex-col w-fit ml-auto ">
 
 
