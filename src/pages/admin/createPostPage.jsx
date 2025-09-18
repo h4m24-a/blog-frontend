@@ -48,7 +48,7 @@ const CreatePostPage = () => {
       </div>
 
             <div className="flex mt-7 flex-col mx-auto justify-end items-center">
-              <form onSubmit={HandleCreatePost} className="border-1 h-70 shadow-xl border-black rounded-md p-3">     {/* Create post Form */}
+              <form onSubmit={HandleCreatePost} className="border-1 shadow-xl border-black rounded-md p-3">     {/* Create post Form */}
 
                 <label htmlFor="title"></label>
                 <input
