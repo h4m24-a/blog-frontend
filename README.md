@@ -1,4 +1,3 @@
-# inventory-management
 Blog API
 
 ## View Project : 
