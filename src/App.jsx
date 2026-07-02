@@ -9,7 +9,7 @@ import Dashboard from "./pages/admin/dashboard";
 import AdminBlogPage from "./pages/admin/adminBlogPage";
 import AdminHomePage from "./pages/admin/adminHomepage";
 import CreatePostPage from "./pages/admin/createPostPage";
-import Error from "./pages/Error";
+import Error from "./pages/error";
 import NotAuthorized from "./pages/notAuthorized";
 
 import { useAuthContext } from "./context/useAuthContext";
