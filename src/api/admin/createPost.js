@@ -1,5 +1,5 @@
 const createPost = async (token, title, content) => {
-  const response = await fetch("http://localhost:3000/api/admin/post", {
+  const response = await fetch("https://blog-api-production-0057.up.railway.app/api/admin/post", {
     method: 'POST',
     credentials: 'include',
      headers: {

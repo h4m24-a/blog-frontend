@@ -1,5 +1,5 @@
 const adminUpdateComment =  async (token, postId, commentId, updatedContent) => {
-  const response = await fetch(`http://localhost:3000/api/admin/posts/${postId}/comments/${commentId}`, {
+  const response = await fetch(`https://blog-api-production-0057.up.railway.app/api/admin/posts/${postId}/comments/${commentId}`, {
     method: 'PUT',
     credentials: 'include',
     headers: {

@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/auth/logout", {
+      const response = await fetch("https://blog-api-production-0057.up.railway.app/api/auth/logout", {
         method: 'POST',
         credentials: 'include',
       });
@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }) => {
 
     const getRefresh = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/auth/refresh", {    // making a get request to this route to allow users to request a new access token using a valid refresh token
+        const response = await fetch("https://blog-api-production-0057.up.railway.app/api/auth/refresh", {    // making a get request to this route to allow users to request a new access token using a valid refresh token
           credentials: "include",  // ensures that cookies, authorization tokens, or other credentials are sent with the request,
         });
 
@@ -108,7 +108,7 @@ export const AuthProvider = ({ children }) => {
     const getUserProfile = async () => {
       
         try {
-        const response = await fetch("http://localhost:3000/api/auth/user", {
+        const response = await fetch("https://blog-api-production-0057.up.railway.app/api/auth/user", {
           credentials: "include",
           headers: {
             "Content-Type": "application/json",

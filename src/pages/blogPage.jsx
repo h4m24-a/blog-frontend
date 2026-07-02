@@ -82,7 +82,7 @@ const BlogPage = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/posts/${postId}/comments`,
+        `https://blog-api-production-0057.up.railway.app/api/posts/${postId}/comments`,
         {
           method: "POST",
           credentials: "include",
@@ -303,7 +303,7 @@ const BlogPage = () => {
               // const profImg = profileImages[index % profileImages.length];  // profileImages.length is 8.  Value will never be above length of 8.  Original index is the remainder if it can't divide.
 
               return (
-                <div className="border-l-1  border-l-neutral-200 flex flex-row my-14 gap-x-3" key={comment.id}>
+                <div className="border-l  border-l-neutral-200 flex flex-row my-14 gap-x-3" key={comment.id}>
                   <img
                     src="https://static.vecteezy.com/system/resources/previews/002/387/693/non_2x/user-profile-icon-free-vector.jpg"
                     alt={`Profile of ${comment.user.username}`}

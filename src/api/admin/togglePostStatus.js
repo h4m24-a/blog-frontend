@@ -1,5 +1,5 @@
 const togglePostStatus = async (token, postId) => {
-  const response = await fetch(`http://localhost:3000/api/admin/posts/${postId}/toggle`, {
+  const response = await fetch(`https://blog-api-production-0057.up.railway.app/api/admin/posts/${postId}/toggle`, {
     method: 'PATCH',
     credentials: 'include',
     headers: {
