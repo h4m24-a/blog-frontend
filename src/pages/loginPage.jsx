@@ -51,7 +51,7 @@ const LoginPage = () => {
 
     
     } catch (error) {
-      throw error(error.message)
+      setError(error.message);
     }
     finally {
       setIsLoading(false)
