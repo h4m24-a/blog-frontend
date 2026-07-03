@@ -52,7 +52,7 @@ export default function Homepage() {
             </p>
           </div>
 
-          {posts?.length === 0 &&  (
+          {posts?.length === 0 || !posts &&  (
             <p className=" text-xl text-center mt-6 text-red-500 font-mono">No posts are found!</p>
             )}
 
