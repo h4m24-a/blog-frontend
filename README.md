@@ -1,6 +1,6 @@
-# Blog API
+# Blog Frontend
 
-## View Project : 
+## View Project : https://blog-frontend-production-14e1.up.railway.app/
 
 - React
 - Vite
