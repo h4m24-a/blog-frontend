@@ -19,6 +19,8 @@ export const AuthProvider = ({ children }) => {
 }); // reads from localStorage right at initialization 
 
 
+console.log(isAuthenticated)
+
 
   
   const login = async (token) => { // function is called when a user logs in successfully
