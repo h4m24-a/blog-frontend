@@ -86,12 +86,17 @@ console.log(isAuthenticated)
           throw error;
         }
 
+        if (response.status === 401) {
+        setAccessToken(null);
+        setIsAuthenticated(false)
+        localStorage.removeItem("isAuthenticated");
+        
+        }
         setAccessToken(data.accessToken);
       } catch (error) {
         console.error("Refresh token failed:", error.message);
         setAccessToken(null);
-        setIsAuthenticated(false)
-        localStorage.removeItem("isAuthenticated");
+
       }
     };
 
