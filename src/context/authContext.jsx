@@ -72,7 +72,7 @@ console.log(isAuthenticated)
   useEffect(() => {
     
     const getRefresh = async () => {
-    if (!isAuthenticated) return;   // If user is not authenticated, return stops the execution of getRefresh
+     // If user is not authenticated, return stops the execution of getRefresh
       try {
         const response = await fetch("https://blog-api-production-0057.up.railway.app/api/refresh", {    // making a get request to this route to allow users to request a new access token using a valid refresh token
           credentials: "include",  // ensures that cookies, authorization tokens, or other credentials are sent with the request,
