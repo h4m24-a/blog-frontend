@@ -19,7 +19,6 @@ export const AuthProvider = ({ children }) => {
 }); // reads from localStorage right at initialization 
 
 
-console.log(isAuthenticated)
 
 
   
